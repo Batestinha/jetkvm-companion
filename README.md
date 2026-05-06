@@ -21,15 +21,20 @@ References:
 The companion uses only public Android APIs:
 
 - a foreground service,
+- Android's overlay permission for a tiny non-touchable background launch-assist
+  overlay,
 - a transparent `showWhenLocked` Activity,
 - `KeyguardManager.requestDismissKeyguard()` when the target is already trusted by Extend Unlock.
 
-It does not inject input, capture the screen, use ADB, require root, use Accessibility, or depend on Shizuku.
+It does not inject input, capture the screen, use ADB, require root, use
+Accessibility, or depend on Shizuku.
 
 ## Suggested Target Modes
 
 - **No lockscreen**: may work for some users, but some apps are hostile toward disabled lockscreen or insecure-device configurations.
-- **Keyguard on with Extend Unlock**: recommended stock-Android mode. Install JetKVM Companion on the target phone and enable launch-on-boot if desired.
+- **Keyguard on with Extend Unlock**: recommended stock-Android mode. Install
+  JetKVM Companion on the target phone, grant background launch assist, and
+  enable launch-on-boot if desired.
 - **Keyguard on without Extend Unlock**: no stock/public JetKVM-only solution. Hard-locked devices require the user credential or third-party automation/privilege such as Tasker, Shizuku, Accessibility automation, root, or device-owner/OEM privileges.
 
 ## Obtainium
