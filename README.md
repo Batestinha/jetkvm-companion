@@ -46,6 +46,10 @@ JetKVM Companion uses a two-stage watchdog:
 - A boot-started primary watchdog detects JetKVM-identifiable input devices
   exposed to Android. In the current JetKVM firmware this is the `JetKVM USB
   Emulation Device` keyboard plus touchscreen or pointer.
+- The current Linux gadget VID/PID `1d6b:0104` is treated as supporting
+  metadata, but the required identity signal is the JetKVM-specific input
+  device name. This keeps detection stable if JetKVM later moves to a dedicated
+  VID/PID.
 - Only while those peripherals are present does a secondary screen-on watchdog
   perform trusted keyguard dismissal.
 - One screen-on event produces one bounded transparent Activity launch and one
