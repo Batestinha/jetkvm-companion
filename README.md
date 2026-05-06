@@ -23,6 +23,8 @@ The companion uses only public Android APIs:
 - a foreground service,
 - Android's overlay permission for a tiny non-touchable background launch-assist
   overlay,
+- Android `InputDevice` metadata to detect JetKVM-identifiable local
+  peripherals,
 - a transparent `showWhenLocked` Activity,
 - `KeyguardManager.requestDismissKeyguard()` when the target is already trusted by Extend Unlock.
 
@@ -33,9 +35,21 @@ Accessibility, or depend on Shizuku.
 
 - **No lockscreen**: may work for some users, but some apps are hostile toward disabled lockscreen or insecure-device configurations.
 - **Keyguard on with Extend Unlock**: recommended stock-Android mode. Install
-  JetKVM Companion on the target phone, grant background launch assist, and
-  enable launch-on-boot if desired.
+  JetKVM Companion on the target phone, grant background launch assist and
+  unrestricted battery usage, and enable launch-on-boot if desired.
 - **Keyguard on without Extend Unlock**: no stock/public JetKVM-only solution. Hard-locked devices require the user credential or third-party automation/privilege such as Tasker, Shizuku, Accessibility automation, root, or device-owner/OEM privileges.
+
+## Watchdog Model
+
+JetKVM Companion uses a two-stage watchdog:
+
+- A boot-started primary watchdog detects JetKVM-identifiable input devices
+  exposed to Android. In the current JetKVM firmware this is the `JetKVM USB
+  Emulation Device` keyboard plus touchscreen or pointer.
+- Only while those peripherals are present does a secondary screen-on watchdog
+  perform trusted keyguard dismissal.
+- One screen-on event produces one bounded transparent Activity launch and one
+  `requestDismissKeyguard()` call. There is no retry loop.
 
 ## Obtainium
 
